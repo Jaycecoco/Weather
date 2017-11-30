@@ -31,7 +31,7 @@ public class City {
         this.cityCode=cityCode;
     }
 
-    public int getProvincedId(){
+    public int getProvinceId(){
         return provinceId;
     }
     public void setProvinceId(int provinceId){

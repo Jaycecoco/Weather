@@ -1,11 +1,13 @@
-package com.huangxiao.weather.model;
+package com.huangxiao.weather.db;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.huangxiao.weather.db.WeatherOpenHelper;
+import com.huangxiao.weather.model.City;
+import com.huangxiao.weather.model.County;
+import com.huangxiao.weather.model.Province;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,15 +79,16 @@ public class WeatherDB {
     public void saveCity(City city){
         if (city!=null){
             ContentValues values=new ContentValues();
-            values.put("province_name",city.getCityName());
-            values.put("province_code",city.getCityCode());
+            values.put("city_name",city.getCityName());
+            values.put("city_code",city.getCityCode());
+            values.put("province_id",city.getProvinceId());
             db.insert("City",null,values);
         }
     }
     /**
      * 从数据库中读取某省所有的城市信息
      */
-    public List<City> loadCitys(int provinceId){
+    public List<City> loadCities(int provinceId){
         List<City> list= new ArrayList<City>();
         Cursor cursor=db.query("City",null,"province_id=?",new String[]{String.valueOf(provinceId)},null,null,null);
         if(cursor.moveToFirst()){
@@ -106,15 +109,16 @@ public class WeatherDB {
     public void saveCounty(County county){
         if (county!=null){
             ContentValues values=new ContentValues();
-            values.put("province_name",county.getCountyName());
-            values.put("province_code",county.getCountyCode());
+            values.put("county_name",county.getCountyName());
+            values.put("county_code",county.getCountyCode());
+            values.put("city_id",county.getCityId());
             db.insert("County",null,values);
         }
     }
     /**
      * 从数据库中读取某市所有的县信息
      */
-    public List<County> loadCounts(int cityId){
+    public List<County> loadCounties(int cityId){
         List<County> list= new ArrayList<County>();
         Cursor cursor=db.query("County",null,"city_id=?",new String[]{String.valueOf(cityId)},null,null,null);
         if(cursor.moveToFirst()){
@@ -129,9 +133,7 @@ public class WeatherDB {
         }
         return list;
     }
-    /**
-     *
-     */
+
 
 
 }
