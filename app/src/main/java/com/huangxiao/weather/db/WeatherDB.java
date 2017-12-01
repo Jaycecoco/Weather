@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.huangxiao.weather.model.City;
 import com.huangxiao.weather.model.County;
@@ -35,6 +36,7 @@ public class WeatherDB {
     private WeatherDB(Context context){
         WeatherOpenHelper dbHelper=new WeatherOpenHelper(context,DB_NAME,null,VERSION);
         db=dbHelper.getWritableDatabase();
+        Log.d("TEST","db create success");
     }
     /**
      * 获取WeatherDB的实例。
@@ -69,7 +71,10 @@ public class WeatherDB {
                 province.setProvinceName(cursor.getString(cursor.getColumnIndex("province_name")));
                 province.setProvinceCode(cursor.getString(cursor.getColumnIndex("province_code")));
                 list.add(province);
-            }while ((cursor.moveToNext()));
+            }while (cursor.moveToNext());
+        }
+        if(cursor != null){  //注意,最后需要把Cursor对象关闭,关闭前需要判断cursor对象是否是null
+            cursor.close();
         }
         return list;
     }
@@ -77,30 +82,32 @@ public class WeatherDB {
      * 将City实例存储到数据库。
      */
     public void saveCity(City city){
-        if (city!=null){
-            ContentValues values=new ContentValues();
-            values.put("city_name",city.getCityName());
-            values.put("city_code",city.getCityCode());
-            values.put("province_id",city.getProvinceId());
-            db.insert("City",null,values);
+        if(city != null){
+            ContentValues values = new ContentValues();
+            values.put("city_name", city.getCityName());
+            values.put("city_code", city.getCityCode());
+            values.put("province_id", city.getProvinceId());
+            db.insert("City", null, values);
         }
     }
     /**
      * 从数据库中读取某省所有的城市信息
      */
-    public List<City> loadCities(int provinceId){
-        List<City> list= new ArrayList<City>();
-        Cursor cursor=db.query("City",null,"province_id=?",new String[]{String.valueOf(provinceId)},null,null,null);
-        if(cursor.moveToFirst()){
-            do{
-                City city=new City();
+    public List<City> loadCities(int provinceId) {
+        List<City> list = new ArrayList<City>();
+        Cursor cursor = db.query("City", null, "province_id = ?", new String[]{String.valueOf(provinceId)}, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                City city = new City();
                 city.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 city.setCityName(cursor.getString(cursor.getColumnIndex("city_name")));
                 city.setCityCode(cursor.getString(cursor.getColumnIndex("city_code")));
                 city.setProvinceId(provinceId);
                 list.add(city);
-            }while ((cursor.moveToNext()));
+            } while (cursor.moveToNext());
         }
+        if (cursor != null)
+            cursor.close();
         return list;
     }
     /**
@@ -129,7 +136,10 @@ public class WeatherDB {
                 county.setCountyCode(cursor.getString(cursor.getColumnIndex("county_code")));
                 county.setCityId(cityId);
                 list.add(county);
-            }while ((cursor.moveToNext()));
+            }while (cursor.moveToNext());
+        }
+        if(cursor != null){  //注意,最后需要把Cursor对象关闭,关闭前需要判断cursor对象是否是null
+            cursor.close();
         }
         return list;
     }
@@ -137,3 +147,4 @@ public class WeatherDB {
 
 
 }
+

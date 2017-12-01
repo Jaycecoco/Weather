@@ -42,6 +42,7 @@ public class WeatherOpenHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_PROVINCE);
         db.execSQL(CREATE_CITY);
         db.execSQL(CREATE_COUNTY);
+
     }
 
     @Override

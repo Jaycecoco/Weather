@@ -39,7 +39,7 @@ public class Utility {
     public static boolean handleCitiesResponse(WeatherDB weatherDB,String response,int provinceId){
         if (!TextUtils.isEmpty(response)){
             String[] allCities=response.split(",");
-            if (allCities!=null&&allCities.length>0){
+            if (allCities!=null && allCities.length>0){
                 for (String c:allCities){
                     String[] array=c.split("\\|");
                     City city=new City();
@@ -68,7 +68,7 @@ public class Utility {
                     county.setCountyCode(array[0]);
                     county.setCountyName(array[1]);
                     county.setCityId(cityId);
-                    //将解析出来的数据存储到City表里
+                    //将解析出来的数据存储到County表里
                     weatherDB.saveCounty(county);
                 }
                 return true;

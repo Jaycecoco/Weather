@@ -13,10 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.huangxiao.weather.R;
+import com.huangxiao.weather.db.WeatherDB;
 import com.huangxiao.weather.model.City;
 import com.huangxiao.weather.model.County;
 import com.huangxiao.weather.model.Province;
-import com.huangxiao.weather.db.WeatherDB;
 import com.huangxiao.weather.util.HttpCallbackListener;
 import com.huangxiao.weather.util.HttpUtil;
 import com.huangxiao.weather.util.Utility;
@@ -36,13 +36,13 @@ public class ChooseAreaActivity extends Activity {
     private ProgressDialog progressDialog;
     private TextView titleText;
     private ListView listView;
-    private ArrayAdapter<String>adapter;
+    private ArrayAdapter<String> adapter;
     private WeatherDB weatherDB;
-    private List<String>dataList=new ArrayList<String>();
+    private List<String> dataList=new ArrayList<String>();
 
-    private List<Province>provinceList;
-    private List<City>cityList;
-    private List<County>countyList;
+    private List<Province> provinceList;
+    private List<City> cityList;
+    private List<County> countyList;
 
     private Province selectedProvince;
     private City selectedCity;
@@ -62,7 +62,7 @@ public class ChooseAreaActivity extends Activity {
         weatherDB=WeatherDB.getInstance(this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int index, long arg3) {
+            public void onItemClick(AdapterView<?>arg0, View view, int index, long arg3) {
                 if (currentLevel==LEVEL_PROVINCE){
                     selectedProvince=provinceList.get(index);
                     queryCities();
