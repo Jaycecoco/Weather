@@ -1,0 +1,9 @@
+<litepal>
+    <dbname value="weather"/>
+    <version value="1"/>
+    <list>
+        <mapping class="com.huangxiao.weather.db.Province"/>
+        <mapping class="com.huangxiao.weather.db.City"/>
+        <mapping class="com.huangxiao.weather.db.County"/>
+    </list>
+</litepal>

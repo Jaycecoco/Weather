@@ -1,13 +1,15 @@
-package com.huangxiao.weather.model;
+package com.huangxiao.weather.db;
+
+import org.litepal.crud.DataSupport;
 
 /**
  * Created by Abbey on 2017/11/28 0028.
  */
 
-public class County {
+public class County extends DataSupport {
     private int id;
     private String countyName;
-    private String countyCode;
+    private String weatherId;
     private int cityId;
 
     public int getId(){
@@ -24,11 +26,9 @@ public class County {
         this.countyName=countyName;
     }
 
-    public String getCountyCode(){
-        return countyCode;
-    }
-    public void setCountyCode(String countyCode){
-        this.countyCode=countyCode;
+    public String getWeatherId() {return weatherId;}
+    public void setWeatherId(String weatherId){
+        this.weatherId=weatherId;
     }
 
     public int getCityId(){
