@@ -1,6 +1,7 @@
 package com.huangxiao.weather.util;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.huangxiao.weather.db.City;
@@ -122,16 +123,39 @@ public class Utility {
         }
         return false;
     }
+//去掉BOM头
+//    public  static  String removeBOM(String data) {
+//        if (TextUtils.isEmpty(data)) {
+//            return data;
+//        }
+//        if (data.startsWith("\ufeff")) {
+//            return data.substring(1);
+//        }else {
+//            return data;
+//        }
+//
+//    }
+
 //    将返回的JSON数据解析成Weather实体类
     public static Weather handleWeatherResponse(String response){
+//        if (response!=null && response.startsWith("\ufeff")){
+//            response=response.substring(1);
+//        }
         try {
+//
+
             JSONObject jsonObject=new JSONObject(response);
             JSONArray jsonArray=jsonObject.getJSONArray("HeWeather");
             String weatherContent=jsonArray.getJSONObject(0).toString();
+
             return new Gson().fromJson(weatherContent,Weather.class);
         }catch (Exception e){
+
             e.printStackTrace();
+            Log.d("BBBB",e.toString());
         }
         return null;
     }
+
+
 }

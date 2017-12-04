@@ -51,4 +51,15 @@ public class HttpUtil{
         Request request=new Request.Builder().url(address).build();
         client.newCall(request).enqueue(callback);
     }
+//    public  static  String removeBOM(String data) {
+//        if (TextUtils.isEmpty(data)) {
+//            return data;
+//        }
+//        if (data.startsWith("\ufeff")) {
+//            return data.substring(1);
+//        }else {
+//            return data;
+//        }
+//
+//    }
 }
