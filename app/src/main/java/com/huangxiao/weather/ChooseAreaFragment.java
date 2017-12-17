@@ -227,7 +227,7 @@ public class ChooseAreaFragment extends Fragment{
                     @Override
                     public void run() {
                         closeProgressDialog();
-                        Toast.makeText(getContext(),"加载失败",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"请检查网络设置",Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -240,7 +240,7 @@ public class ChooseAreaFragment extends Fragment{
     private void showProgressDialog(){
         if (progressDialog==null){
             progressDialog=new ProgressDialog(getActivity());
-            progressDialog.setMessage("正在加载。。。");
+            progressDialog.setMessage("正在加载...");
             progressDialog.setCanceledOnTouchOutside(false);
         }
         progressDialog.show();
