@@ -72,6 +72,7 @@ public class AutoUpdateService extends Service {
         HttpUtil.sendOKHttpRequest(requestBingPic, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                
                 e.printStackTrace();
             }
 

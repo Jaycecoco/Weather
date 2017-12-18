@@ -96,7 +96,13 @@ public class WeatherActivity extends AppCompatActivity {
         SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString=prefs.getString("weather",null);
 
-       
+        //判断是否有缓存加载bing每日一图。
+        String bingPic=prefs.getString("bing_pic",null);
+        if (bingPic!= null){
+            Glide.with(this).load(bingPic).into(bingPicImg);
+        }else {
+            loadBingPic();
+        }
 
         if (weatherString!=null){
             //有缓存时直接解析天气
@@ -114,16 +120,11 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 requestWeather(mWeatherId);
+                Toast.makeText(WeatherActivity.this,"刷新天气信息成功",Toast.LENGTH_SHORT).show();
             }
         });
 
-        //判断是否有缓存加载bing每日一图。
-        String bingPic=prefs.getString("bing_pic",null);
-        if (bingPic!= null){
-            Glide.with(this).load(bingPic).into(bingPicImg);
-        }else {
-            loadBingPic();
-        }
+
     }
     //加载每日一图
     private void loadBingPic(){
@@ -131,6 +132,7 @@ public class WeatherActivity extends AppCompatActivity {
         HttpUtil.sendOKHttpRequest(requestBingPic, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                Glide.with(WeatherActivity.this).load("http://www.bing.com/az/hprichbg/rb/SeychellesCCSS_ZH-CN9574865698_1920x1080.jpg").into(bingPicImg);
                 e.printStackTrace();
             }
 
@@ -198,6 +200,7 @@ public class WeatherActivity extends AppCompatActivity {
 
 
         });
+        loadBingPic();
     }
     //处理并展示Weather实体类中的数据
     private void showWeatherInfo(Weather weather){
